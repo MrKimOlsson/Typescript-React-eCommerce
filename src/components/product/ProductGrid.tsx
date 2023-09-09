@@ -9,7 +9,7 @@ interface ProductGridProps {
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   return (
-      <div className='grid-container'>
+      <div className='flex-wrap'>
         {products.length > 0 ? (
           products.map(product => <ProductComponent key={product.id} product={product} />)
         ) : (

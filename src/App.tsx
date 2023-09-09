@@ -8,13 +8,12 @@ import { setProductList } from './productsAction'; // Import the action creator
 import { CartProvider } from './context/CartContext';
 import store from './store/index';
 
-
 // Pages
 import Home from './pages/Home';
 import Store from './pages/Store';
 import Product from './pages/Product';
 import Cart from './pages/Cart'
-// import { CartProvider } from './utils/contexts/CartContext';
+import AddProduct from './pages/AddProduct'
 
 
 const App = () => {
@@ -59,6 +58,10 @@ const App = () => {
       {
         path: 'product/:id',
         element: <Product />,
+      },
+      {
+        path: 'addProduct',
+        element: <AddProduct />,
       },
       ],
         

@@ -1,11 +1,13 @@
 import { CartItem } from "../types/cartItem";
-import { ProductType } from "../types/product";
+// import { ProductType } from "../types/product";
 
 const PRODUCTS_STORAGE_KEY = '@LS_PRODUCTS';
 const USER_STORAGE_KEY = '@LS_USER';
 const CART_STORAGE_KEY = '@LS_CART';
 
 type StorageKey = typeof PRODUCTS_STORAGE_KEY | typeof USER_STORAGE_KEY | typeof CART_STORAGE_KEY;
+
+//_________________________SAVE/GET_________________________
 
 const getFromLocalStorage = (key: StorageKey) => {
     const data = localStorage.getItem(key);
@@ -14,29 +16,11 @@ const getFromLocalStorage = (key: StorageKey) => {
 
 const saveToLocalStorage = (key: StorageKey, data: any) => {
     const stringifiedData = JSON.stringify(data);
-
+    
     localStorage.setItem(key, stringifiedData);
 }
 
-export const getProductsFromLocalStorage = (): ProductType[] => {
-    return getFromLocalStorage(PRODUCTS_STORAGE_KEY) || [];
-}
-
-export const saveProductToLocalStorage = (threads: ProductType[]) => {
-    saveToLocalStorage(PRODUCTS_STORAGE_KEY, threads);
-}
-
-export const getUserFromLocalStorage = (): User => {
-    return getFromLocalStorage(USER_STORAGE_KEY) || {
-        id: -1,
-	    name: "John Doe",
-	    userName: "anonymous"
-    }
-}
-
-export const saveUserToLocalStorage = (user: User) => {
-    saveToLocalStorage(USER_STORAGE_KEY, user);
-}
+//_________________________CART_________________________
 
 export const getCartFromLocalStorage = (): CartItem[] => {
     return getFromLocalStorage(CART_STORAGE_KEY) || [];
@@ -53,3 +37,28 @@ export const removeFromLocalStorage = (key: StorageKey) => {
 export const clearLocalStorage = () => {
     localStorage.clear();
 }
+
+//_________________________PRODUCTS_________________________
+
+// export const getProductsFromLocalStorage = (): ProductType[] => {
+//     return getFromLocalStorage(PRODUCTS_STORAGE_KEY) || [];
+// }
+
+// export const saveProductToLocalStorage = (threads: ProductType[]) => {
+//     saveToLocalStorage(PRODUCTS_STORAGE_KEY, threads);
+// }
+
+//_________________________USER_________________________
+
+// export const getUserFromLocalStorage = (): User => {
+//     return getFromLocalStorage(USER_STORAGE_KEY) || {
+//         id: -1,
+// 	    name: "John Doe",
+// 	    userName: "anonymous"
+//     }
+// }
+
+// export const saveUserToLocalStorage = (user: User) => {
+//     saveToLocalStorage(USER_STORAGE_KEY, user);
+// }
+

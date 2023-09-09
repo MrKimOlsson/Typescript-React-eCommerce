@@ -10,7 +10,6 @@ const Store = () => {
   return (
     <>
       <div className='wrapper'>
-        <h2>Products</h2>
         <div className='content'>
           <FetchProductsComponent /> {/* Call the FetchProductsComponent */}
           {productList.length > 0 ? (

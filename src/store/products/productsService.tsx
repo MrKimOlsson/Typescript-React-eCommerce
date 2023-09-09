@@ -1,5 +1,5 @@
 import { db } from "../../firebase/config"
-import { addDoc, collection, getDocs, DocumentSnapshot } from 'firebase/firestore'
+import { collection, getDocs, doc, setDoc } from 'firebase/firestore'
 // import { Product as ProductType } from '../../types'; // Adjust the import path
 
 export interface ProductType {
@@ -28,34 +28,35 @@ async function fetchProducts(): Promise<ProductType[]> {
   }
 }
 
-const createProduct = async (productData: any) => {
-  const collectionRef = collection(db, 'products')
-  const docRef = await addDoc(collectionRef, productData)
 
-  if(!docRef.id) throw new Error('Something went wrong')
+export async function addProducts(product: ProductType): Promise<void> {
+  try {
 
-  console.log(docRef)
-  return {id: docRef.id, ...productData}
-
+    const threadRef = doc(db, "products", product.id.toString());
+    await setDoc(threadRef, product);
+    console.log("Ny tråd skapad med ID:", product.id);
+  } catch (error) {
+    console.error("Fel vid tillägg av tråd:", error);
+  }
 }
 
-const getAllAsync = async (col: string) => {
-  const colRef = collection(db, col)
-  const querySnapshot = await getDocs(colRef)
+// const getAllAsync = async (col: string) => {
+//   const colRef = collection(db, col)
+//   const querySnapshot = await getDocs(colRef)
 
-  const products: ProductType[] = []
-    querySnapshot.forEach((doc: DocumentSnapshot) => {
-    products.push({...doc.data() } as ProductType);
-  })
+//   const products: ProductType[] = []
+//     querySnapshot.forEach((doc: DocumentSnapshot) => {
+//     products.push({...doc.data() } as ProductType);
+//   })
 
-  return products
-}
+//   return products
+// }
 
 // export { fetchProducts }
 
 const productsService = {
-  createProduct,
-  getAllAsync,
+  addProducts,
+  // getAllAsync,
   fetchProducts
 }
 

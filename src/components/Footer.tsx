@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import Logo from '../../assets/logo.png'
-import './footer.css'
+import Logo from '../assets/logo.png'
+import '../utils/styles/footer.css'
 
 const Footer = () => {
 
@@ -16,9 +16,9 @@ const Footer = () => {
         <div>
           <ul className="footer-menu">
               <li><NavLink className='nav-link' to='/'>Home</NavLink></li>
-              <li><NavLink className='nav-link' to='/products'>Products</NavLink></li>
-              <li><NavLink className='nav-link' to='/details'>Details</NavLink></li>
+              <li><NavLink className='nav-link' to='/store'>Store</NavLink></li>
               <li><NavLink className='nav-link' to='/cart'>Cart</NavLink></li>
+              <li><NavLink className='nav-link' to='/addProduct'>Add products</NavLink></li>
           </ul>
         </div>
       <div>

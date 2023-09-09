@@ -26,20 +26,29 @@ const Product: React.FC<ProductProps> = ({ product }) => {
   };
 
   return (
-    <div className='product'>
-      <Link to={`/product/${product.id}`}>
-        <div className='productGridTitleContainer'>
-        {product.imageURL.length > 0 ? (
-          <img className='productGridImage' src={product.imageURL[0]} alt="Product"/>
-          ) : (
-            <p>No image available</p>
-            )}
-            <h4 className='productTitle'>{product.title}</h4>
-            
-            </div>
-      </Link>
-      <button onClick={() => handleAddToCart()}>Add to Cart</button>
-    </div>
+<Link className='productCard' to={`/product/${product.id}`}>
+  {product.imageURL.length > 0 ? (
+    <img className='productGridImage' src={product.imageURL[0]} alt="Product" />
+  ) : (
+    <p>No image available</p>
+  )}
+  <h4 className='productTitle'>{product.title}</h4>
+  <div className='row'>
+    <p><strong>Price: {product.price}$</strong></p>
+    <button
+      id='btn-addToCart'
+      className='button'
+      onClick={(e) => {
+        // Prevent the link from being activated
+        e.preventDefault();
+        // Handle adding to cart
+        handleAddToCart();
+      }}
+    >
+      Add to Cart
+    </button>
+  </div>
+</Link>
   );
 };
 

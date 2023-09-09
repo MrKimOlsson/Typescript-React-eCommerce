@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-// import { useShoppingCart } from "../../context/CartContext"
-import { Button, Container, Nav, Navbar as NavbarBs } from "react-bootstrap"
-import Logo from '../../assets/logo.png'
-import './navbar.css'
+import Logo from '../assets/logo.png'
+import '../utils/styles/navbar.css'
 
 const Navbar = () => {
   // const { openCart, cartQuantity } = useShoppingCart()
@@ -44,8 +42,8 @@ const Navbar = () => {
               <Link to='/' ><img src={Logo} alt="KimOlsson.se" className="link logo-img"/></Link>
               <li><NavLink className='nav-link' to='/'>Home</NavLink></li>
               <li><NavLink className='nav-link' to='/store'>Store</NavLink></li>
-              {/* <li><NavLink className='nav-link' to='/details'>Details</NavLink></li> */}
               <li><NavLink className='nav-link' to='/cart'>Cart</NavLink></li>
+               <li><NavLink className='nav-link' to='/addProduct'>Add products</NavLink></li>
               
               {/* {cartQuantity > 0 && (
               <button className='circle' onClick={openCart}>{cartQuantity}</button>
@@ -58,8 +56,8 @@ const Navbar = () => {
             <menu className="menuMobile">
                 <li><NavLink className="menuItem" to="/">Home</NavLink></li>
                 <li><NavLink className="menuItem" to='/store'>Store</NavLink></li>
-                <li><NavLink className="menuItem" to='/details'>Details</NavLink></li>
                 <li><NavLink className="menuItem" to='/cart'>Cart</NavLink></li>
+                <li><NavLink className="menuItem" to='/addProduct'>Add products</NavLink></li>
             </menu>
             {/*-- Hamburger --*/}
             <div>
