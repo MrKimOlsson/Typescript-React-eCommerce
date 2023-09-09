@@ -6,7 +6,7 @@
 
 .flexRow {
     display: flex;
-    align-items:start;
+    flex: start;
     justify-content: center;
     flex-wrap: nowrap;
     width: 85%;
@@ -28,11 +28,12 @@
     margin: 3rem 0rem;
 }
 
-.grid-container{
+.flex-wrap{
     justify-content: center;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .product-container {
@@ -53,4 +54,28 @@
 .productTitle {
     color: black;
     text-decoration: none;
+    margin: .2rem 0rem .5rem;
+}
+
+.productCard {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: .5rem;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.527);
+}
+
+.productCard:hover {
+    box-shadow: 0px 1px 4px .5px rgba(0, 0, 0, 0.527);
+}
+
+.productCard:active {
+    background-color: #f7f7f7;
+    box-shadow: 0px 1px 3px .5px rgba(0, 0, 0, 0.527);
+}
+
+#btn-addToCart{
+    z-index: 100;
+    cursor: pointer;
 }

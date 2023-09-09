@@ -1,0 +1,61 @@
+.thread-form {
+    width: 60vw;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column; 
+}
+
+.input-group label {
+    margin-top: 1rem;
+}
+
+.input-group input {
+    font-size: 16px;
+    margin-block: .5rem;
+    border-radius: .5rem;
+    border: 0;
+    padding: .5rem;
+    border: 1px solid #ccc;
+}
+
+.input-group input:focus {
+    outline: none;
+}
+
+.form-textarea {
+    border: 0;
+    border-radius: .5rem;
+    resize: none;
+    border: 1px solid #ccc;
+    height: 8rem;
+}
+
+.form-shortTextarea {
+    border: 0;
+    border-radius: .5rem;
+    resize: none;
+    /* padding-block: .5rem;   */
+    border: 1px solid #ccc;
+    height: 4rem;
+}
+
+.form-textarea:focus {
+    outline: none;
+}
+
+select {
+    border: 0;
+    padding-block: .5rem;
+    border-radius: .5rem;
+    border: 1px solid #ccc;
+}
+
+select:focus {
+    outline: none;
+}
+
+.thread-form button {
+    margin: 2rem 0rem 2rem;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
-import CartComponent from '../components/shoppingCart/CartComponent';
+import CartComponent from '../components/CartComponent';
 
 const Cart = () => {
   const { cart, dispatch } = useCart();
@@ -24,10 +24,32 @@ const Cart = () => {
     dispatch({ type: 'REMOVE_FROM_CART', payload: productId });
   };
 
+  const handleCheckout = () => {
+    console.log('Add checkout functionality')
+    
+  };
+
+
+  let ammountList: number[] = []
+  let ammount: number = 0
+  let totalSum: number = 0
+  cart.items.forEach(item => {
+        ammount = item.quantity * item.price
+        ammountList.push(ammount)
+  });
+
+  if(ammountList.length > 0){
+
+    ammountList.forEach(sum => {
+      totalSum += sum
+    });
+  }
+
+
   return (
     <div className='wrapper'>
+      <div className='shopingCart'>
       <h2>Shopping cart</h2>
-      <div className='content'>
       {cart.items.length > 0 ? (
         cart.items.map(cartItem => (
           <CartComponent
@@ -35,11 +57,14 @@ const Cart = () => {
             cartItem={cartItem}
             onQuantityChange={handleQuantityChange}
             onDelete={handleDelete}
+          
           />
         ))
       ) : (
         <h2>No products to show</h2>
       )}
+      <p><strong>Total price: {totalSum}</strong></p>
+      <button className='button' onClick={() => handleCheckout()}>Checkout</button>
       </div>
     </div>
   );
