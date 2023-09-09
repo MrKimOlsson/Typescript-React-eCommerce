@@ -1,0 +1,85 @@
+import useDoc from '../../hooks/useDoc';
+import Loader from '../../components/loader/Loader';
+import { useParams } from 'react-router-dom';
+import { useCart } from '../../context/CartContext';
+import '../../utils/styles/product.css'
+
+function SingleProductComponent() {
+
+    const { id } = useParams();
+    const { cart, dispatch } = useCart();
+
+  const { data: product, error, loading } = useDoc('products', id || '');
+  if (id === undefined) {
+    return <p>Product ID is missing</p>;
+  }
+
+  if (!product) {
+    return (
+      <div>
+        {loading && <Loader />}
+        {error && <p>{error}</p>}
+      </div>
+    );
+  }
+
+  const handleAddToCart = () => {
+    // Check if the product is already in the cart
+    const existingCartItemIndex = cart.items.findIndex((item) => item.productId === product.id);
+  
+    if (existingCartItemIndex !== -1) {
+      // If the product is already in the cart, dispatch the "INCREMENT_QUANTITY" action
+      dispatch({ type: 'INCREMENT_QUANTITY', payload: product.id });
+    } else {
+      // If the product is not in the cart, add it with a quantity of 1
+      const cartItem = { productId: product.id, quantity: 1, price: product.price, title: product.title, imageURL: product.imageURL[0], };
+      dispatch({ type: 'ADD_TO_CART', payload: cartItem });
+    }
+  };
+
+  return (
+    <>
+      <h3>{product.title}</h3>
+      <div className='flexRow'>
+        <div className='singleProductText'>
+            <h4>{product.shortDescription}</h4>
+            <p>{product.description}</p>
+            <p><b>Price: {product.price}</b></p>
+            <button onClick={() => handleAddToCart()}>Add to Cart</button>
+        </div>
+
+        {product.imageURL.length > 0 ? (
+          <img className='productImage' src={product.imageURL[0]} alt="Product"/>
+          ) : (
+            <p>No image available</p>
+            )}
+      </div>
+    
+    <div className='productImages'>
+      
+      {product.imageURL.length > 0 ? (
+        <img className='productImage' src={product.imageURL[1]} alt="Product"/>
+        ) : (
+          <p>No image available</p>
+          )}
+      {product.imageURL.length > 0 ? (
+        <img className='productImage' src={product.imageURL[2]} alt="Product"/>
+        ) : (
+          <p>No image available</p>
+          )}
+      {product.imageURL.length > 0 ? (
+        <img className='productImage' src={product.imageURL[3]} alt="Product"/>
+        ) : (
+          <p>No image available</p>
+          )}
+      {product.imageURL.length > 0 ? (
+        <img className='productImage' src={product.imageURL[4]} alt="Product"/>
+        ) : (
+          <p>No image available</p>
+          )}
+      </div>
+    </>
+  );
+}
+
+export default SingleProductComponent;
