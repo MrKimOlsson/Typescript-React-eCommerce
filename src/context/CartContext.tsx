@@ -2,11 +2,11 @@ import React, { createContext, useContext, useReducer, useEffect, ReactNode } fr
 
 // Define the shape of a cart item
 interface CartItem {
-  productId:   string;
-  quantity:    number;
-  title:       string;
-  imageURL:    string;
-  price:       number,
+  productId: string;
+  quantity: number;
+  title: string;
+  imageURL: string;
+  price: number;
 }
 
 // Define the shape of the cart state
@@ -14,14 +14,13 @@ interface CartState {
   items: CartItem[];
 }
 
-
 // Define the actions for manipulating the cart
 type CartAction =
   | { type: 'ADD_TO_CART'; payload: CartItem }
   | { type: 'REMOVE_FROM_CART'; payload: string }
   | { type: 'INCREMENT_QUANTITY'; payload: string }
   | { type: 'DECREMENT_QUANTITY'; payload: string }
-  | { type: 'INITIALIZE_CART'; payload: CartState }; // Add an initialize action
+  | { type: 'INITIALIZE_CART'; payload: CartState };
 
 // Create a context for the cart
 const CartContext = createContext<{ cart: CartState; dispatch: React.Dispatch<CartAction> } | undefined>(
@@ -38,7 +37,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         // If the product is already in the cart, update its quantity
         const updatedItems = [...state.items];
         updatedItems[existingItemIndex].quantity += action.payload.quantity;
-        return { ...state, items: updatedItems  };
+        return { ...state, items: updatedItems };
       } else {
         // If the product is not in the cart, add it
         return { ...state, items: [...state.items, action.payload] };
@@ -46,22 +45,22 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 
     case 'REMOVE_FROM_CART':
       // Remove a product from the cart
-      const updatedItems = state.items.filter((item) => item.productId !== action.payload);
-      return { ...state, items: updatedItems };
+      const filteredItems = state.items.filter((item) => item.productId !== action.payload);
+      return { ...state, items: filteredItems };
 
-      case 'INCREMENT_QUANTITY':
-        // Increment the quantity of a product in the cart
-        const incrementedItems = state.items.map((item) =>
-          item.productId === action.payload ? { ...item, quantity: item.quantity + 1 } : item
-        );
-        return { ...state, items: incrementedItems };
-  
-      case 'DECREMENT_QUANTITY':
-        // Decrement the quantity of a product in the cart
-        const decrementedItems = state.items.map((item) =>
-          item.productId === action.payload ? { ...item, quantity: item.quantity - 1 } : item
-        );
-        return { ...state, items: decrementedItems };
+    case 'INCREMENT_QUANTITY':
+      // Increment the quantity of a product in the cart
+      const incrementedItems = state.items.map((item) =>
+        item.productId === action.payload ? { ...item, quantity: item.quantity + 1 } : item
+      );
+      return { ...state, items: incrementedItems };
+
+    case 'DECREMENT_QUANTITY':
+      // Decrement the quantity of a product in the cart
+      const decrementedItems = state.items.map((item) =>
+        item.productId === action.payload ? { ...item, quantity: item.quantity - 1 } : item
+      );
+      return { ...state, items: decrementedItems };
 
     case 'INITIALIZE_CART':
       // Initialize the cart with stored data
@@ -72,8 +71,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
   }
 };
 
-
-// Create a CartProvider component to wrap your app with
+// Create a CartProvider component to wrap the app with
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [cart, dispatch] = useReducer(cartReducer, { items: [] });
 

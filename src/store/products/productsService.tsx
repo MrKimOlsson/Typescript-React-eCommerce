@@ -1,24 +1,27 @@
 import { db } from "../../firebase/config"
-import { collection, getDocs, doc, setDoc } from 'firebase/firestore'
-// import { Product as ProductType } from '../../types'; // Adjust the import path
+import { collection, getDocs, doc, setDoc, DocumentData } from 'firebase/firestore'
 
 export interface ProductType {
-  category:         string,
-  imageURL:         string[],
-  price:            number,
-  shortDescription: string,
-  description:      string,
-  title:            string,
-  id:               string,
+  category: string;
+  imageURL: string[];
+  price: number;
+  shortDescription: string;
+  description: string;
+  title: string;
+  id: string;
 }
 
+// Function to fetch products from Firestore
 async function fetchProducts(): Promise<ProductType[]> {
   try {
     const ProductsCollectionRef = collection(db, 'products');
     const productsSnapshot = await getDocs(ProductsCollectionRef);
     const products: ProductType[] = [];
+
     productsSnapshot.forEach((doc) => {
-      products.push(doc.data() as ProductType);
+      // Cast the document data to the ProductType interface
+      const productData = doc.data() as ProductType;
+      products.push(productData);
     });
 
     return products;
@@ -28,36 +31,24 @@ async function fetchProducts(): Promise<ProductType[]> {
   }
 }
 
-
-export async function addProducts(product: ProductType): Promise<void> {
+// Function to add a product to Firestore
+export async function addProduct(product: ProductType): Promise<void> {
   try {
-
-    const threadRef = doc(db, "products", product.id.toString());
-    await setDoc(threadRef, product);
-    console.log("Ny tråd skapad med ID:", product.id);
+    const productRef = doc(db, "products", product.id.toString());
+    
+    // Set the document data with the product information
+    await setDoc(productRef, product);
+    
+    console.log("New product created with ID:", product.id);
   } catch (error) {
-    console.error("Fel vid tillägg av tråd:", error);
+    console.error("Error adding product:", error);
   }
 }
 
-// const getAllAsync = async (col: string) => {
-//   const colRef = collection(db, col)
-//   const querySnapshot = await getDocs(colRef)
-
-//   const products: ProductType[] = []
-//     querySnapshot.forEach((doc: DocumentSnapshot) => {
-//     products.push({...doc.data() } as ProductType);
-//   })
-
-//   return products
-// }
-
-// export { fetchProducts }
-
-const productsService = {
-  addProducts,
-  // getAllAsync,
+// Export the product service functions
+const productService = {
+  addProduct,
   fetchProducts
 }
 
-export default productsService
+export default productService;

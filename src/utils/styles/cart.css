@@ -14,7 +14,6 @@
     border-radius: .5rem;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.527);
     margin-bottom: 1rem;
-    
 }
 
 .shopingCart {
@@ -39,35 +38,28 @@
     width: 9rem;
 }
 
-
 /* SMAL CART */
-
 .smallCartWrapper {
-    margin: 1rem 2rem;
+    margin: 0rem 2rem .5rem;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
-    /* align-items: center; */
 }
 
 .smallCartProductList {
-    /* margin: 0rem 3rem 0rem; */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    /* gap: 1rem; */
 }
 
 .smallCartProductImage {
     width: 40px;
     height: 50px;
     object-fit: cover;
-
 }
 
 .smallCartPriceAndButton {
-    margin: 1rem 2rem 0rem;
+    margin: 1rem 2rem 2rem;
 }
 
 .smallCartTitle {
@@ -77,3 +69,20 @@
 .smallCartNoProducts {
     margin: 1rem 2rem 1rem
 }
+
+.cartContainer {
+    width: 300px;
+    max-height: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: -300px;
+    background-color: white;
+    transition: right 0.3s ease-in-out;
+    z-index: 999;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.527);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Enable vertical scrolling when needed */
+  }
+  

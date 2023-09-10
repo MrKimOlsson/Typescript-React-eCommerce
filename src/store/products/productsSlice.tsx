@@ -1,8 +1,6 @@
 import productsService from "../products/productsService";
 import { ProductType } from '../../utils/types/product';
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-// import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Error {
   message: string;
@@ -20,17 +18,7 @@ const initialState: ProductsState = {
   loading: false,
 };
 
-// export const addProduct = createAsyncThunk(
-//   'product-list/add',
-//   async (productData: ProductType, thunkAPI) => {
-//     try {
-//       return await productsService.createProduct(productData);
-//     } catch (err) {
-//       return thunkAPI.rejectWithValue((err as Error).message);
-//     }
-//   }
-// );
-
+// Async thunk action to fetch products
 export const getProducts = createAsyncThunk(
   'product-list/getAll',
   async (_, thunkAPI) => {
@@ -50,29 +38,8 @@ const productsSlice = createSlice({
       state.productList = action.payload;
     },
   },
-
-// export const productsSlice = createSlice({
-//   name: 'product-list',
-//   initialState,
-//   reducers: {
-//     setProductList: (state, action) => {
-//       state.productList = action.payload;
-//     },
-//   },
   extraReducers: (builder) => {
     builder
-      // .addCase(addProduct.pending, (state) => {
-      //   state.loading = true;
-      // })
-      // .addCase(addProduct.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.error = null;
-      //   state.productList.push(action.payload);
-      // })
-      // .addCase(addProduct.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.error = (action.payload as Error).message;
-      // })
       .addCase(getProducts.pending, (state) => {
         state.loading = true;
       })

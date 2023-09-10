@@ -1,28 +1,31 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { addProducts } from '../../store/products/productsService'
-import '../../utils/styles/addProductForm.css'
+import React, { useState, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { addProduct } from '../../store/products/productsService';
+import '../../utils/styles/addProductForm.css';
 
-const AddProductForm = () => {
+interface ProductFormProps {
+  // Define any props you might pass to this component
+}
 
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
-    const [shortDescription, setShortDescription] = useState('')
-    const [price, setPrice] = useState(0)
-    const [imageUrlOne, setImageUrlOne] = useState('')
-    const [imageUrlTwo, setImageUrlTwo] = useState('')
-    const [imageUrlThree, setImageUrlThree] = useState('')
-    const [imageUrlFour, setImageUrlFour] = useState('')
-    const [imageUrlFive, setImageUrlFive] = useState('')
-    const [category, setCategory] = useState('')
+const AddProductForm: React.FC<ProductFormProps> = () => {
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [shortDescription, setShortDescription] = useState<string>('');
+  const [price, setPrice] = useState<number>(0);
+  const [imageUrlOne, setImageUrlOne] = useState<string>('');
+  const [imageUrlTwo, setImageUrlTwo] = useState<string>('');
+  const [imageUrlThree, setImageUrlThree] = useState<string>('');
+  const [imageUrlFour, setImageUrlFour] = useState<string>('');
+  const [imageUrlFive, setImageUrlFive] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
 
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    const addNewThread = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+  const addNewProduct = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
 
     // Create an array to store image URLs
-    const imageUrls = [];
+    const imageUrls: string[] = [];
 
     // Push individual image URLs into the array
     if (imageUrlOne) imageUrls.push(imageUrlOne);
@@ -31,37 +34,37 @@ const AddProductForm = () => {
     if (imageUrlFour) imageUrls.push(imageUrlFour);
     if (imageUrlFive) imageUrls.push(imageUrlFive);
 
+    // Generate a random 20-letter ID string
+    function generateRandomString(length: number): string {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let randomString = '';
 
-        // Generate a random 20 letter ID string
-        function generateRandomString(length: number) {
-          const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-          let randomString = '';
-        
-          for (let i = 0; i < length; i++) {
-            const randomIndex = Math.floor(Math.random() * characters.length);
-            randomString += characters.charAt(randomIndex);
-          }
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        randomString += characters.charAt(randomIndex);
+      }
 
-          return randomString;
-        }
-        
-        // Get the random ID
-        const randomId = generateRandomString(20);
-       
-        addProducts({
-          id: randomId,
-          title,
-          description,
-          shortDescription,
-          category,
-          imageURL: imageUrls, // Set the array of image URLs
-          price,
-        });
-            navigate('/')
+      return randomString;
     }
 
+    // Get the random ID
+    const randomId: string = generateRandomString(20);
+
+    addProduct({
+      id: randomId,
+      title,
+      description,
+      shortDescription,
+      category,
+      imageURL: imageUrls, // Set the array of image URLs
+      price,
+    });
+
+    navigate('/');
+  };
+
   return (
-    <form onSubmit={(e) => addNewThread(e)} className='thread-form'>
+    <form onSubmit={(e) => addNewProduct(e)} className='thread-form'>
         <div className="input-group">
             <label htmlFor="title" className='form-label'>Title</label>
             <input

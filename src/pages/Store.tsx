@@ -5,13 +5,15 @@ import { RootState } from '../store/index';
 import FetchProductsComponent from '../components/product/FetchProductsComponent';
 
 const Store = () => {
-  const productList = useSelector((state: RootState) => state.products.productList); // Access productList from the Redux state
+  // Access productList from the Redux state
+  const productList = useSelector((state: RootState) => state.products.productList);
 
   return (
     <>
       <div className='wrapper'>
         <div className='content'>
-          <FetchProductsComponent /> {/* Call the FetchProductsComponent */}
+          {/* Call the FetchProductsComponent */}
+          <FetchProductsComponent />
           {productList.length > 0 ? (
             <ProductGrid products={productList} />
           ) : (

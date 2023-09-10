@@ -1,31 +1,13 @@
 import React from 'react';
-import { ProductType } from '../../utils/types/product'; // Adjust the import path
 import { Link } from 'react-router-dom';
-import { useCart } from '../../context/CartContext';
-import CartFunctions from './AddToCartFunction';
-
+import { ProductType } from '../../utils/types/product';
+import AddToCartFunctions from './AddToCartFunction'; // Correct the import if necessary
 
 interface ProductProps {
-  product: ProductType; // Use the ProductType
+  product: ProductType;
 }
 
 const Product: React.FC<ProductProps> = ({ product }) => {
-  
-  const { cart, dispatch } = useCart();
-  const handleAddToCart = () => {
-    // Check if the product is already in the cart
-    const existingCartItemIndex = cart.items.findIndex((item) => item.productId === product.id);
-  
-    if (existingCartItemIndex !== -1) {
-      // If the product is already in the cart, dispatch the "INCREMENT_QUANTITY" action
-      dispatch({ type: 'INCREMENT_QUANTITY', payload: product.id });
-    } else {
-      // If the product is not in the cart, add it with a quantity of 1
-      const cartItem = { productId: product.id, quantity: 1, price: product.price, title: product.title, imageURL: product.imageURL[0], };
-      dispatch({ type: 'ADD_TO_CART', payload: cartItem });
-    }
-  };
-
   return (
     <Link className='productCard' to={`/product/${product.id}`}>
       {product.imageURL.length > 0 ? (
@@ -36,7 +18,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
       <h4 className='productTitle'>{product.title}</h4>
       <div className='row'>
         <p><strong>Price: {product.price}$</strong></p>
-        <CartFunctions product={product} />
+        <AddToCartFunctions product={product} />
       </div>
     </Link>
   );
