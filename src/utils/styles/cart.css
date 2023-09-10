@@ -38,3 +38,42 @@
 .cartItemTitle {
     width: 9rem;
 }
+
+
+/* SMAL CART */
+
+.smallCartWrapper {
+    margin: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+
+.smallCartProductList {
+    /* margin: 0rem 3rem 0rem; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /* gap: 1rem; */
+}
+
+.smallCartProductImage {
+    width: 40px;
+    height: 50px;
+    object-fit: cover;
+
+}
+
+.smallCartPriceAndButton {
+    margin: 1rem 2rem 0rem;
+}
+
+.smallCartTitle {
+    margin: 1rem 2rem 1rem;
+}
+
+.smallCartNoProducts {
+    margin: 1rem 2rem 1rem
+}

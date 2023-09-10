@@ -16,16 +16,19 @@ import Cart from './pages/Cart'
 import AddProduct from './pages/AddProduct'
 
 
+
+
 const App = () => {
-
+  
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     async function fetchAndSetProducts() {
       try {
         const productsData: ProductType[] = await productsService.fetchProducts();
         dispatch(setProductList(productsData)); // Dispatch the action with fetched products
         console.log(productsData)
+        
       } catch (error) {
         // Handle error
       }

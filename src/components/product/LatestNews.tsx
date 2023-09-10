@@ -5,14 +5,14 @@ import AddToCartFunctions from './AddToCartFunction';
 
 
 interface ProductListProps {
-    productList: ProductType[];
+    products: ProductType[];
   }
 
-const LatestNews: React.FC<ProductListProps> = ({ productList }: ProductListProps) => {
+const LatestNews: React.FC<ProductListProps> = ({ products }: ProductListProps) => {
 
-    let productOne = productList[1]
-    let productTwo = productList[9]
-    let productThree = productList[2]
+    let productOne = products[1]
+    let productTwo = products[9]
+    let productThree = products[2]
 
   return (
       <div className='flexRow'>

@@ -1,10 +1,83 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import Logo from '../assets/logo.png'
 import '../utils/styles/navbar.css'
+import '../utils/styles/cart.css'
+import { useCart } from '../context/CartContext';
+// import SmallCartComponent from '../components/SmallCartComponentCartComponent';
+import SmallCartComponent from './SmallCartComponent';
+import { FaShoppingCart } from 'react-icons/fa';
+
 
 const Navbar = () => {
-  // const { openCart, cartQuantity } = useShoppingCart()
+
+  //_____________________Cart_____________________
+  // Get the cart
+  const { cart, dispatch } = useCart();
+
+  const handleQuantityChange = (productId: string, quantityChange: number) => {
+    // Check if quantityChange is positive or negative
+    if (quantityChange > 0) {
+      // If quantityChange is positive, increment the quantity
+      dispatch({ type: 'INCREMENT_QUANTITY', payload: productId });
+      console.log('increment');
+    } else if (quantityChange === -1) {
+      // If quantityChange is -1, decrement the quantity
+      dispatch({ type: 'DECREMENT_QUANTITY', payload: productId });
+      console.log('decrement');
+    }
+  };
+
+  const handleDelete = (productId: string) => {
+
+    dispatch({ type: 'REMOVE_FROM_CART', payload: productId });
+  };
+
+  const handleCheckout = () => {
+    console.log('Add checkout functionality')
+    
+  };
+
+  // Calculate total sum
+  let amountList: number[] = []
+  let amount: number = 0
+  let totalSum: number = 0
+  cart.items.forEach(item => {
+        amount = item.quantity * item.price
+        amountList.push(amount)
+  });
+
+  if(amountList.length > 0){
+
+    amountList.forEach(sum => {
+      totalSum += sum
+    });
+  }
+
+  // Check product ammount in the cart
+  let productAmount: number = 0 
+  if(cart.items){
+    productAmount = cart.items.length
+  }
+
+    const [isCartOpen, setCartOpen] = useState(false);
+    const [cartAmount, setCartAmount] = useState(0);
+
+    useEffect(() => {
+    })
+    
+    const openCart = () => {
+      console.log('Button clicked');
+      console.log('isCartOpen:', isCartOpen);
+      setCartAmount(productAmount);
+      setCartOpen(!isCartOpen);
+      console.log('isCartOpen after click:', isCartOpen);
+    };
+
+
+    //_____________________Navbar_____________________
+
+
   useEffect(() => {
     const navbar = document.querySelector(".navbar");
     const menuItems = document.querySelectorAll(".menuItem");
@@ -31,7 +104,6 @@ const Navbar = () => {
     };
   }, []);
 
- 
     
 
   return (
@@ -45,11 +117,48 @@ const Navbar = () => {
               <li><NavLink className='nav-link' to='/cart'>Cart</NavLink></li>
                <li><NavLink className='nav-link' to='/addProduct'>Add products</NavLink></li>
               
-              {/* {cartQuantity > 0 && (
-              <button className='circle' onClick={openCart}>{cartQuantity}</button>
-              )} */}
+              
+              {/* <button className='circle' onClick={openCart}>{productAmmount}</button> */}
+              
+            {/* Cart */}
+            {/* <FaShoppingCart /> */}
+            <button className='' onClick={openCart}>
+            <span id=''>{productAmount}</span>
+            <span className='cartIcon'></span>
+            <FaShoppingCart />
+             </button>
+             <div
+            id='cartContainer'
+            className={`cartContainer ${isCartOpen ? 'open' : ''}`}
+            style={{ right: isCartOpen ? '0' : '-300px' }}
+          >
+            <h2 className='smallCartTitle'>Shoping cart</h2>
+            {/* <div className='shopingCart'> */}
+            {cart.items.length > 0 ? (
+            cart.items.map(cartItem => (
+            <SmallCartComponent
+              key={cartItem.productId}
+              cartItem={cartItem}
+              onQuantityChange={handleQuantityChange}
+              onDelete={handleDelete}
+              totalSum={totalSum}
+              />
+                ))
+              ) : (
+                <h3 className='smallCartNoProducts'>Add some products</h3>
+              )}
+              <div className='smallCartPriceAndButton'>
+              <p><strong>Total price: {totalSum}</strong></p>
+              <Link to="./cart">
+              <button className='button'>To the shoping cart</button>
+              </Link>
+              </div>
+            </div>
 
             </menu>
+
+    
+        
 
    
             {/*-- Hidden menu --*/}
