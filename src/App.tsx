@@ -1,34 +1,30 @@
-import React, { useEffect } from 'react'
-import { RouterProvider, createBrowserRouter} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import RootLayout from './layout/RootLayout';
-import './App.css'
+import './App.css';
 import { Provider, useDispatch } from 'react-redux';
-import productsService, { ProductType } from './store/products/productsService';
-import { setProductList } from './productsAction'; // Import the action creator
+import productsService from './store/products/productsService';
+import { setProductsList} from './store/products/productsSlice';
 import { CartProvider } from './context/CartContext';
-import store from './store/index';
+import { ProductType } from './utils/types/product'
+import store, { AppDispatch, RootState } from './store/index'; // Import RootState
 
 // Pages
 import Home from './pages/Home';
 import Store from './pages/Store';
 import Product from './pages/Product';
-import Cart from './pages/Cart'
-import AddProduct from './pages/AddProduct'
-
-
-
+import Cart from './pages/Cart';
+import AddProduct from './pages/AddProduct';
 
 const App = () => {
-  
-  const dispatch = useDispatch();
-  
+  const dispatch = useDispatch<AppDispatch>(); // Specify AppDispatch type
+
   useEffect(() => {
     async function fetchAndSetProducts() {
       try {
         const productsData: ProductType[] = await productsService.fetchProducts();
-        dispatch(setProductList(productsData)); // Dispatch the action with fetched products
-        console.log(productsData)
-        
+        dispatch(setProductsList(productsData)); // Dispatch the action with fetched products
+        console.log(productsData);
       } catch (error) {
         // Handle error
       }
@@ -36,54 +32,46 @@ const App = () => {
     fetchAndSetProducts();
   }, [dispatch]);
 
-
   // Create a BrowserRouter using the createBrowserRouter function
   const router = createBrowserRouter([
     {
-      
       path: '/',
       element: <RootLayout />,
-      // errorElement: <Error />,
       children: [
-      // Route for the home page
-      {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: 'store',
-        element: <Store />,
-      },
-      {
-        path: 'cart',
-        element: <Cart />,
-      },
-      {
-        path: 'product/:id',
-        element: <Product />,
-      },
-      {
-        path: 'addProduct',
-        element: <AddProduct />,
-      },
+        // Route for the home page
+        {
+          index: true,
+          element: <Home />,
+        },
+        {
+          path: 'store',
+          element: <Store />,
+        },
+        {
+          path: 'cart',
+          element: <Cart />,
+        },
+        {
+          path: 'product/:id',
+          element: <Product />,
+        },
+        {
+          path: 'addProduct',
+          element: <AddProduct />,
+        },
       ],
-        
-
     },
   ]);
+
   // Render the RouterProvider component with the created router if authIsReady is true
   return (
-    <>
-      {
-        <div className='app'>
-          <Provider store={store}>
-          <CartProvider>
+    <div className='app'>
+      <Provider store={store}>
+        <CartProvider>
           <RouterProvider router={router} />
-          </CartProvider>
-          </Provider>
-        </div>
-      }
-    </>
+        </CartProvider>
+      </Provider>
+    </div>
   );
 };
 

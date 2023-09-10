@@ -56,6 +56,8 @@ function SingleProductComponent() {
       </div>
     
     <div className='productImages'>
+
+      {/* Loop the through all the images instead? */}
       
       {product.imageURL.length > 0 ? (
         <img className='productImage' src={product.imageURL[1]} alt="Product"/>

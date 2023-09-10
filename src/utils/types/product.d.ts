@@ -13,3 +13,11 @@ export interface ProductType {
     productList: ProductType[];
   }
 
+  export interface Footwear extends ProductType {
+    size: string,
+  }
+
+  export interface Footwear extends ProductType {
+    size: string,
+  }
+

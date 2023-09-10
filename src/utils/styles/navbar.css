@@ -155,56 +155,47 @@
     padding: 1rem;
   }
 
-  /* .circle {
-    width: 20px;
-    height: 20px;
-    background-color: blue;
-  } */
-
-
-
   /* Cart */
-
   .circle {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: blue; /* Change the background color as needed */
+    background-color: blue;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     position: relative;
+    box-shadow: 3px 3px 6px 8px rgb(0, 0, 0);
   }
   
   #productAmount {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    background-color: red; /* Change the background color as needed */
+    top: 2px;
+    right: 0px;
+    background-color: red;
     color: white;
-    padding: 5px 10px;
+    padding: 2px 5px;
     border-radius: 50%;
+    font-size: .7rem;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgb(0, 0, 0);
+    box-shadow: 1px 1px 3px rgb(0, 0, 0);
   }
   
-  /* .cartIcon { */
-    /* Style your cart icon here using background-image or an icon font */
+  .hide-amount {
+    display: none;
+  }
+  
+  .cartIcon {
+    margin-top: .3rem;
+    font-size: 1.8rem;
+    color: rgb(60, 60, 60);
+  }
 
-  /* } */
-  
-  .cartContainer {
-    width: 300px; /* Adjust the width as needed */
-    height: 100%;
-    position: fixed;
-    top: 0;
-    right: -300px; /* Initially hidden outside the viewport */
-    background-color: white; /* Change the background color as needed */
-    transition: right 0.3s ease-in-out;
-    z-index: 999;
-    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.527);
-    display: flex;
-    flex-direction: column;
-    
-    /* justify-content: center; */
+  .cartButton {
+    border: none;
+    background-color: #fff;
   }
+  

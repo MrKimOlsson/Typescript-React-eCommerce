@@ -4,7 +4,6 @@ import Logo from '../assets/logo.png'
 import '../utils/styles/navbar.css'
 import '../utils/styles/cart.css'
 import { useCart } from '../context/CartContext';
-// import SmallCartComponent from '../components/SmallCartComponentCartComponent';
 import SmallCartComponent from './SmallCartComponent';
 import { FaShoppingCart } from 'react-icons/fa';
 
@@ -33,9 +32,10 @@ const Navbar = () => {
     dispatch({ type: 'REMOVE_FROM_CART', payload: productId });
   };
 
+  // For the cart checkout button.
+  // Not working yet. Needs checkout functionality
   const handleCheckout = () => {
     console.log('Add checkout functionality')
-    
   };
 
   // Calculate total sum
@@ -60,33 +60,30 @@ const Navbar = () => {
     productAmount = cart.items.length
   }
 
-    const [isCartOpen, setCartOpen] = useState(false);
-    const [cartAmount, setCartAmount] = useState(0);
+  const [isCartOpen, setCartOpen] = useState(false);
+  const [cartAmount, setCartAmount] = useState(0);
 
-    useEffect(() => {
-    })
-    
-    const openCart = () => {
-      console.log('Button clicked');
-      console.log('isCartOpen:', isCartOpen);
-      setCartAmount(productAmount);
-      setCartOpen(!isCartOpen);
-      console.log('isCartOpen after click:', isCartOpen);
-    };
-
+  useEffect(() => {
+  })
+  
+  const openCart = () => {
+    console.log('Button clicked');
+    console.log('isCartOpen:', isCartOpen);
+    setCartAmount(productAmount);
+    setCartOpen(!isCartOpen);
+    console.log('isCartOpen after click:', isCartOpen);
+  };
 
     //_____________________Navbar_____________________
 
-
-  useEffect(() => {
-    const navbar = document.querySelector(".navbar");
-    const menuItems = document.querySelectorAll(".menuItem");
-    const hamburger = document.querySelector(".hamburger");
+    useEffect(() => {
+      const navbar = document.querySelector(".navbar");
+      const menuItems = document.querySelectorAll(".menuItem");
+      const hamburger = document.querySelector(".hamburger");
     
-
-    const toggleMenu = () => {
-      navbar?.classList.toggle("change");
-      navbar?.classList.toggle("showMenu");
+      const toggleMenu = () => {
+        navbar?.classList.toggle("change");
+        navbar?.classList.toggle("showMenu");
     };
 
     menuItems.forEach((menuItem) => {
@@ -104,36 +101,33 @@ const Navbar = () => {
     };
   }, []);
 
-    
 
   return (
     <>
      <nav className='navbar'>
+        <menu className="menu-desktop">
+          <Link to='/' ><img src={Logo} alt="KimOlsson.se" className="link logo-img"/></Link>
+          <li><NavLink className='nav-link' to='/'>Home</NavLink></li>
+          <li><NavLink className='nav-link' to='/store'>Store</NavLink></li>
+          <li><NavLink className='nav-link' to='/cart'>Cart</NavLink></li>
+          <li><NavLink className='nav-link' to='/addProduct'>Add products</NavLink></li>
+          
+          {/* Cart */}
 
-            <menu className="menu-desktop">
-              <Link to='/' ><img src={Logo} alt="KimOlsson.se" className="link logo-img"/></Link>
-              <li><NavLink className='nav-link' to='/'>Home</NavLink></li>
-              <li><NavLink className='nav-link' to='/store'>Store</NavLink></li>
-              <li><NavLink className='nav-link' to='/cart'>Cart</NavLink></li>
-               <li><NavLink className='nav-link' to='/addProduct'>Add products</NavLink></li>
-              
-              
-              {/* <button className='circle' onClick={openCart}>{productAmmount}</button> */}
-              
-            {/* Cart */}
-            {/* <FaShoppingCart /> */}
-            <button className='' onClick={openCart}>
-            <span id=''>{productAmount}</span>
+          <button className='cartButton' onClick={openCart}>
+            <span id='productAmount' className={productAmount === 0 ? 'hide-amount' : ''}>
+              {productAmount}
+            </span>
             <span className='cartIcon'></span>
-            <FaShoppingCart />
-             </button>
-             <div
+            <FaShoppingCart className='cartIcon' />
+          </button>
+
+          <div
             id='cartContainer'
             className={`cartContainer ${isCartOpen ? 'open' : ''}`}
             style={{ right: isCartOpen ? '0' : '-300px' }}
           >
             <h2 className='smallCartTitle'>Shoping cart</h2>
-            {/* <div className='shopingCart'> */}
             {cart.items.length > 0 ? (
             cart.items.map(cartItem => (
             <SmallCartComponent
@@ -141,45 +135,38 @@ const Navbar = () => {
               cartItem={cartItem}
               onQuantityChange={handleQuantityChange}
               onDelete={handleDelete}
-              totalSum={totalSum}
               />
                 ))
               ) : (
                 <h3 className='smallCartNoProducts'>Add some products</h3>
               )}
-              <div className='smallCartPriceAndButton'>
-              <p><strong>Total price: {totalSum}</strong></p>
+            <div className='smallCartPriceAndButton'>
+              <p><strong>Total price: {totalSum}$</strong></p>
               <Link to="./cart">
-              <button className='button'>To the shoping cart</button>
+                <button className='button'>To the shoping cart</button>
               </Link>
-              </div>
             </div>
+          </div>
+        </menu>
 
-            </menu>
+        {/*-- Hidden menu --*/}
+        <menu className="menuMobile">
+          <li><NavLink className="menuItem" to="/">Home</NavLink></li>
+          <li><NavLink className="menuItem" to='/store'>Store</NavLink></li>
+          <li><NavLink className="menuItem" to='/cart'>Cart</NavLink></li>
+          <li><NavLink className="menuItem" to='/addProduct'>Add products</NavLink></li>
+        </menu>
 
-    
-        
-
-   
-            {/*-- Hidden menu --*/}
-            <menu className="menuMobile">
-                <li><NavLink className="menuItem" to="/">Home</NavLink></li>
-                <li><NavLink className="menuItem" to='/store'>Store</NavLink></li>
-                <li><NavLink className="menuItem" to='/cart'>Cart</NavLink></li>
-                <li><NavLink className="menuItem" to='/addProduct'>Add products</NavLink></li>
-            </menu>
-            {/*-- Hamburger --*/}
-            <div>
-            <Link to='/' ><img src={Logo} alt="Shopy" className="link logo-img-mobile"/></Link>
-            <Link to='/' ><img src={Logo} alt="Shopy" className="menu-logo logo-img"/></Link>
-            </div>
-            <div className="hamburger">
-           
-  
-                <div className="bar1"></div>
-                <div className="bar2"></div>
-                <div className="bar3"></div>
-            </div>
+        {/*-- Hamburger --*/}
+        <div>
+          <Link to='/' ><img src={Logo} alt="Shopy" className="link logo-img-mobile"/></Link>
+          <Link to='/' ><img src={Logo} alt="Shopy" className="menu-logo logo-img"/></Link>
+        </div>
+        <div className="hamburger">
+          <div className="bar1"></div>
+          <div className="bar2"></div>
+          <div className="bar3"></div>
+        </div>
         
       </nav>
     </>

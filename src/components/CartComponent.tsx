@@ -7,9 +7,7 @@ interface CartComponentProps {
   onQuantityChange: (productId: string, quantity: number) => void;
   onDelete: (productId: string) => void;
 }
-
 const CartComponent: React.FC<CartComponentProps> = ({ cartItem, onQuantityChange, onDelete }) => {
-  
   
   const handleIncrementQuantity = () => {
     // Call the onQuantityChange prop to increment the quantity
@@ -19,8 +17,7 @@ const CartComponent: React.FC<CartComponentProps> = ({ cartItem, onQuantityChang
   const handleDecrementQuantity = () => {
     // Call the onQuantityChange prop to decrement the quantity
     if (cartItem.quantity > 1) {
-      onQuantityChange(cartItem.productId, -1);
-      
+      onQuantityChange(cartItem.productId, -1); 
     }
   };
 
