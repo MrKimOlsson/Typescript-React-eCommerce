@@ -28,6 +28,23 @@
     margin: 3rem 0rem;
 }
 
+.fullwidth-img {
+    width: 100vw;
+    height: 700px;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    /* Add the blur effect */
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
+}
+
+.productGridImage {
+    width: 270px;
+    height: 295px;
+    object-fit: cover;
+}
+
 .flex-wrap{
     justify-content: center;
     display: flex;
@@ -45,11 +62,6 @@
     font-size: 1rem;
 }
 
-.productGridImage {
-    width: 270px;
-    height: 295px;
-    object-fit: cover;
-}
 
 .productTitle {
     color: black;
@@ -78,4 +90,19 @@
 #btn-addToCart{
     z-index: 100;
     cursor: pointer;
+}
+
+.intro {
+    font-family: 'Quicksand', sans-serif;
+    margin: 15rem 0rem 15rem;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+    font-size: 5rem;
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.527);
+}
+
+.shopy {
+    color: rgb(255, 68, 0);
 }

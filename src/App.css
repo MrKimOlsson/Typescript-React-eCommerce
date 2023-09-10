@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 4rem 0rem 2rem;
+    padding: 3rem 0rem 2rem;
 }
 
 .content {
@@ -47,6 +47,10 @@
     background-color: #e4e4e4;
 }
 
+.btn-moreProducts {
+    margin: 2rem 0rem 0rem;
+}
+
 .btn-quantity {
     border-radius: 50%;
     border: none;
@@ -64,4 +68,18 @@
 .btn-quantity:active {
     box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.286);
     background-color: #e4e4e4;
+}
+
+.dividerDiv{
+    background-color: #fff;
+    color: #000;
+    height: 3.5rem;
+    width: 100vw;
+    position: relative;
+    top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px -2px 2px 0px rgba(0, 0, 0, 0.286);
+    margin-bottom: 3rem;
 }
