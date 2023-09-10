@@ -1,6 +1,11 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
 import CartComponent from '../components/CartComponent';
+import LatestNews from '../components/product/LatestNews';
+import { Link } from 'react-router-dom';
+import FetchProductsComponent from '../components/product/FetchProductsComponent';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 const Cart = () => {
   const { cart, dispatch } = useCart();
@@ -44,28 +49,36 @@ const Cart = () => {
       totalSum += sum
     });
   }
-
-
+  const productList = useSelector((state: RootState) => state.products.productList);
   return (
     <div className='wrapper'>
+      
+      <FetchProductsComponent /> 
       <div className='shopingCart'>
-      <h2>Shopping cart</h2>
-      {cart.items.length > 0 ? (
-        cart.items.map(cartItem => (
-          <CartComponent
-            key={cartItem.productId}
-            cartItem={cartItem}
-            onQuantityChange={handleQuantityChange}
-            onDelete={handleDelete}
-          
-          />
-        ))
-      ) : (
-        <h2>No products to show</h2>
-      )}
-      <p><strong>Total price: {totalSum}</strong></p>
-      <button className='button' onClick={() => handleCheckout()}>Checkout</button>
+        <h2>Shopping cart</h2>
+        {cart.items.length > 0 ? (
+          cart.items.map(cartItem => (
+            <CartComponent
+              key={cartItem.productId}
+              cartItem={cartItem}
+              onQuantityChange={handleQuantityChange}
+              onDelete={handleDelete}
+            
+            />
+          ))
+        ) : (
+          <h2>No products to show</h2>
+        )}
+        <p><strong>Total price: {totalSum}</strong></p>
+        <button className='button' onClick={() => handleCheckout()}>Checkout</button>
       </div>
+      <div className='dividerDiv'>
+        <h4>Latest news!</h4>
+      </div>
+      <LatestNews productList={productList}/>
+      <Link to="/store">
+        <button className='button btn-moreProducts'>More products</button>
+      </Link>
     </div>
   );
 };

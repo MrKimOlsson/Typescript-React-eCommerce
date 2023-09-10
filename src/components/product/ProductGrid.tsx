@@ -7,7 +7,7 @@ interface ProductGridProps {
   products: ProductType[];
 }
 
-const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
+const ProductGrid: React.FC<ProductGridProps> = ({ products }: ProductGridProps) => {
   return (
       <div className='flex-wrap'>
         {products.length > 0 ? (
