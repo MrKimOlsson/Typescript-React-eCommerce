@@ -1,11 +1,12 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
 import CartComponent from '../components/CartComponent';
-import LatestNews from '../components/product/LatestNews';
+// import LatestNews from '../components/product/LatestNews';
 import { Link } from 'react-router-dom';
 import FetchProductsComponent from '../components/product/FetchProductsComponent';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import LatestNews from '../components/product/LatestNews';
 
 const Cart = () => {
   const { cart, dispatch } = useCart();
@@ -35,21 +36,21 @@ const Cart = () => {
   };
 
 
-  let ammountList: number[] = []
-  let ammount: number = 0
+  let amountList: number[] = []
+  let amount: number = 0
   let totalSum: number = 0
   cart.items.forEach(item => {
-        ammount = item.quantity * item.price
-        ammountList.push(ammount)
+        amount = item.quantity * item.price
+        amountList.push(amount)
   });
 
-  if(ammountList.length > 0){
+  if(amountList.length > 0){
 
-    ammountList.forEach(sum => {
+    amountList.forEach(sum => {
       totalSum += sum
     });
   }
-  const productList = useSelector((state: RootState) => state.products.productList);
+  const products = useSelector((state: RootState) => state.products.productList);
   return (
     <div className='wrapper'>
       
@@ -67,7 +68,7 @@ const Cart = () => {
             />
           ))
         ) : (
-          <h2>No products to show</h2>
+          <h3>Add some products</h3>
         )}
         <p><strong>Total price: {totalSum}</strong></p>
         <button className='button' onClick={() => handleCheckout()}>Checkout</button>
@@ -75,7 +76,11 @@ const Cart = () => {
       <div className='dividerDiv'>
         <h4>Latest news!</h4>
       </div>
-      <LatestNews productList={productList}/>
+      {products.length > 0 ? (
+      <LatestNews products={products} />
+      ) : (
+            <h2>No products to show</h2>
+          )}
       <Link to="/store">
         <button className='button btn-moreProducts'>More products</button>
       </Link>
