@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useCart } from '../context/CartContext';
 import CartComponent from '../components/CartComponent';
@@ -8,8 +7,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import LatestNews from '../components/product/LatestNews';
 
+
 const Cart = () => {
-  const { cart, dispatch } = useCart();
+
+  const { state, dispatch } = useCart();
+  const { cartItems } = state; // Access cartItems from state
+  
 
   const handleQuantityChange = (productId: string, quantityChange: number) => {
     if (quantityChange > 0) {
@@ -23,7 +26,7 @@ const Cart = () => {
   };
 
   const handleDelete = (productId: string) => {
-    dispatch({ type: 'REMOVE_FROM_CART', payload: productId });
+    dispatch({ type: 'REMOVE_CART_ITEM', payload: productId });
     // Handle potential errors or edge cases here
   };
 
@@ -32,9 +35,14 @@ const Cart = () => {
     }
 
   let totalSum: number = 0;
-  cart.items.forEach((item) => {
+  // if (Array.isArray(cartItems)) {
+    console.log('cartItems:', cartItems);
+    cartItems.length > 0 && (
+  cartItems.forEach((item) => {
     totalSum += item.quantity * item.price;
-  });
+  })
+    )
+// }
 
   const checkoutButtonText = 'Checkout'; // Use a constant for button text
   const moreProductsButtonText = 'More products'; // Use a constant for button text
@@ -46,8 +54,8 @@ const Cart = () => {
       <FetchProductsComponent />
       <div className='shopingCart'>
         <h2>Shopping cart</h2>
-        {cart.items.length > 0 ? (
-          cart.items.map((cartItem) => (
+        {cartItems.length > 0 ? (
+          cartItems.map((cartItem) => (
             <CartComponent
               key={cartItem.productId}
               cartItem={cartItem}
@@ -59,7 +67,7 @@ const Cart = () => {
           <h3>Add some products</h3>
         )}
         <p>
-          <strong>Total price: {totalSum}</strong>
+          <strong>Total price: {totalSum}$</strong>
         </p>
         <button className='button' onClick={() => handleCheckout()}>
           {checkoutButtonText}

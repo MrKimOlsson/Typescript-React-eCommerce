@@ -1,51 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import Logo from '../assets/logo.png'
-import '../utils/styles/navbar.css'
-import '../utils/styles/cart.css'
+import Logo from '../assets/logo.png';
+import '../utils/styles/navbar.css';
+import '../utils/styles/cart.css';
 import { useCart } from '../context/CartContext';
 import SmallCartComponent from './SmallCartComponent';
 import { FaShoppingCart } from 'react-icons/fa';
-
+import { CartItem } from '../utils/types/cartItem';
 
 const Navbar = () => {
 
-  //_____________________Cart_____________________
-  // Get the cart
-  const { cart, dispatch } = useCart();
+  const { state, dispatch } = useCart();
+  const { cartItems } = state; // Access cartItems from state
+
+  if(!cartItems){
+    console.log("no cart items")
+  }
 
   const handleQuantityChange = (productId: string, quantityChange: number) => {
-    // Check if quantityChange is positive or negative
     if (quantityChange > 0) {
-      // If quantityChange is positive, increment the quantity
       dispatch({ type: 'INCREMENT_QUANTITY', payload: productId });
       console.log('increment');
     } else if (quantityChange === -1) {
-      // If quantityChange is -1, decrement the quantity
       dispatch({ type: 'DECREMENT_QUANTITY', payload: productId });
       console.log('decrement');
     }
   };
 
   const handleDelete = (productId: string) => {
-
-    dispatch({ type: 'REMOVE_FROM_CART', payload: productId });
+    dispatch({ type: 'REMOVE_CART_ITEM', payload: productId });
   };
-
-  // For the cart checkout button.
-  // Not working yet. Needs checkout functionality
-  const handleCheckout = () => {
-    console.log('Add checkout functionality')
-  };
-
+  
   // Calculate total sum
   let amountList: number[] = []
   let amount: number = 0
   let totalSum: number = 0
-  cart.items.forEach(item => {
+
+  // if (Array.isArray(cartItems)) {
+    console.log('cartItems:', cartItems);
+    cartItems.length > 0 && (
+      cartItems.forEach(item => {
         amount = item.quantity * item.price
         amountList.push(amount)
-  });
+      })
+    )
+
+  // } 
+
+  console.log('cart.items from the navbar')
+  console.log(cartItems)
 
   if(amountList.length > 0){
 
@@ -56,22 +59,14 @@ const Navbar = () => {
 
   // Check product ammount in the cart
   let productAmount: number = 0 
-  if(cart.items){
-    productAmount = cart.items.length
+  if(cartItems){
+    productAmount = cartItems.length
   }
 
   const [isCartOpen, setCartOpen] = useState(false);
-  const [cartAmount, setCartAmount] = useState(0);
 
-  useEffect(() => {
-  })
-  
   const openCart = () => {
-    console.log('Button clicked');
-    console.log('isCartOpen:', isCartOpen);
-    setCartAmount(productAmount);
     setCartOpen(!isCartOpen);
-    console.log('isCartOpen after click:', isCartOpen);
   };
 
     //_____________________Navbar_____________________
@@ -104,46 +99,49 @@ const Navbar = () => {
 
   return (
     <>
-     <nav className='navbar'>
+      <nav className="navbar">
         <menu className="menu-desktop">
-          <Link to='/' ><img src={Logo} alt="KimOlsson.se" className="link logo-img"/></Link>
+        <Link to='/' ><img src={Logo} alt="Shopy" className="link logo-img"/></Link>
           <li><NavLink className='nav-link' to='/'>Home</NavLink></li>
           <li><NavLink className='nav-link' to='/store'>Store</NavLink></li>
           <li><NavLink className='nav-link' to='/cart'>Cart</NavLink></li>
           <li><NavLink className='nav-link' to='/addProduct'>Add products</NavLink></li>
           
           {/* Cart */}
-
-          <button className='cartButton' onClick={openCart}>
-            <span id='productAmount' className={productAmount === 0 ? 'hide-amount' : ''}>
+          <button className="cartButton" onClick={openCart}>
+            <span id="productAmount" className={productAmount === 0 ? 'hide-amount' : ''}>
               {productAmount}
             </span>
-            <span className='cartIcon'></span>
-            <FaShoppingCart className='cartIcon' />
+            <span className="cartIcon"></span>
+            <FaShoppingCart className="cartIcon" />
           </button>
 
           <div
-            id='cartContainer'
+            id="cartContainer"
             className={`cartContainer ${isCartOpen ? 'open' : ''}`}
             style={{ right: isCartOpen ? '0' : '-300px' }}
           >
-            <h2 className='smallCartTitle'>Shoping cart</h2>
-            {cart.items.length > 0 ? (
-            cart.items.map(cartItem => (
-            <SmallCartComponent
-              key={cartItem.productId}
-              cartItem={cartItem}
-              onQuantityChange={handleQuantityChange}
-              onDelete={handleDelete}
-              />
-                ))
-              ) : (
-                <h3 className='smallCartNoProducts'>Add some products</h3>
+            <h2 className="smallCartTitle">Shopping cart</h2>
+                    {cartItems.length > 0
+              ? cartItems
+                  .filter((cartItem: CartItem) => cartItem.title && cartItem.imageURL && cartItem.price)
+                  .map((cartItem: CartItem) => (
+                    <SmallCartComponent
+                      key={cartItem.productId}
+                      cartItem={cartItem}
+                      onQuantityChange={handleQuantityChange}
+                      onDelete={handleDelete}
+                    />
+                  ))
+              : (
+                <h3 className="smallCartNoProducts">Add some products</h3>
               )}
-            <div className='smallCartPriceAndButton'>
-              <p><strong>Total price: {totalSum}$</strong></p>
+            <div className="smallCartPriceAndButton">
+              <p>
+                <strong>Total price: {totalSum}$</strong>
+              </p>
               <Link to="./cart">
-                <button className='button'>To the shoping cart</button>
+                <button className="button">To the shopping cart</button>
               </Link>
             </div>
           </div>

@@ -1,13 +1,15 @@
 import useDoc from '../../hooks/useDoc';
 import Loader from '../../components/loader/Loader';
 import { useParams } from 'react-router-dom';
-import { useCart } from '../../context/CartContext';
 import '../../utils/styles/product.css'
+import { useCart } from '../../context/CartContext';
 
 function SingleProductComponent() {
 
-    const { id } = useParams();
-    const { cart, dispatch } = useCart();
+  const { id } = useParams();
+
+  const { state, dispatch } = useCart();
+  const { cartItems } = state; // Access cartItems from state
 
   const { data: product, error, loading } = useDoc('products', id || '');
   if (id === undefined) {
@@ -22,19 +24,21 @@ function SingleProductComponent() {
       </div>
     );
   }
-
+  let existingCartItemIndex: number | string = ""
   const handleAddToCart = () => {
     // Check if the product is already in the cart
-    const existingCartItemIndex = cart.items.findIndex((item) => item.productId === product.id);
-  
-    if (existingCartItemIndex !== -1) {
-      // If the product is already in the cart, dispatch the "INCREMENT_QUANTITY" action
-      dispatch({ type: 'INCREMENT_QUANTITY', payload: product.id });
-    } else {
-      // If the product is not in the cart, add it with a quantity of 1
-      const cartItem = { productId: product.id, quantity: 1, price: product.price, title: product.title, imageURL: product.imageURL[0], };
-      dispatch({ type: 'ADD_TO_CART', payload: cartItem });
-    }
+    cartItems.length > 0 && (
+      existingCartItemIndex = cartItems.findIndex((item) => item.productId === product.id)
+      )
+    
+      if (existingCartItemIndex !== -1) {
+        // If the product is already in the cart, dispatch the "INCREMENT_QUANTITY" action
+        dispatch({ type: 'INCREMENT_QUANTITY', payload: product.id });
+      } else {
+        // If the product is not in the cart, add it with a quantity of 1
+        const cartItem = { productId: product.id, quantity: 1, price: product.price, title: product.title, imageURL: product.imageURL[0], };
+        dispatch({ type: 'CREATE_CART_ITEM', payload: cartItem });
+      }
   };
 
   return (
