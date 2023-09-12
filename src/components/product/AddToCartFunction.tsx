@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useCart } from '../../context/CartContext';
 import { ProductType } from '../../utils/types/product';
+import { saveCartToLocalStorage } from '../../utils/helpers/localStorage'; // Used to save the cart to local storage
 
 interface ProductProps {
   product: ProductType;
 }
 
 const AddToCartFunctions: React.FC<ProductProps> = ({ product }) => {
-  const { cart, dispatch } = useCart();
+  const { state, dispatch } = useCart();
 
   const handleAddToCart = () => {
     // Check if the product is already in the cart
-    const existingCartItemIndex = cart.items.findIndex((item) => item.productId === product.id);
+    const existingCartItemIndex = state.cartItems.findIndex((item) => item.productId === product.id);
 
     if (existingCartItemIndex !== -1) {
       // If the product is already in the cart, dispatch the "INCREMENT_QUANTITY" action
@@ -25,9 +26,15 @@ const AddToCartFunctions: React.FC<ProductProps> = ({ product }) => {
         title: product.title,
         imageURL: product.imageURL[0],
       };
-      dispatch({ type: 'ADD_TO_CART', payload: cartItem });
+      dispatch({ type: 'CREATE_CART_ITEM', payload: cartItem });
     }
   };
+
+  // Use useEffect to update local storage when cartItems change
+  useEffect(() => {
+    // Save the updated cart to local storage
+    saveCartToLocalStorage(state.cartItems);
+  }, [state.cartItems]);
 
   return (
     <div>

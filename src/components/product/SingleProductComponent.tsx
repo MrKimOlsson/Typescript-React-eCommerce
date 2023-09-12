@@ -7,7 +7,7 @@ import '../../utils/styles/product.css'
 function SingleProductComponent() {
 
     const { id } = useParams();
-    const { cart, dispatch } = useCart();
+    const { state, dispatch } = useCart();
 
   const { data: product, error, loading } = useDoc('products', id || '');
   if (id === undefined) {
@@ -25,7 +25,7 @@ function SingleProductComponent() {
 
   const handleAddToCart = () => {
     // Check if the product is already in the cart
-    const existingCartItemIndex = cart.items.findIndex((item) => item.productId === product.id);
+    const existingCartItemIndex = state.cartItems.findIndex((item) => item.productId === product.id);
   
     if (existingCartItemIndex !== -1) {
       // If the product is already in the cart, dispatch the "INCREMENT_QUANTITY" action
@@ -33,7 +33,7 @@ function SingleProductComponent() {
     } else {
       // If the product is not in the cart, add it with a quantity of 1
       const cartItem = { productId: product.id, quantity: 1, price: product.price, title: product.title, imageURL: product.imageURL[0], };
-      dispatch({ type: 'ADD_TO_CART', payload: cartItem });
+      dispatch({ type: 'CREATE_CART_ITEM', payload: cartItem });
     }
   };
 
