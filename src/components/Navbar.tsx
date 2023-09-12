@@ -122,11 +122,8 @@ const Navbar = () => {
             <FaShoppingCart className='cartIcon' />
           </button>
 
-          <div
-            id='cartContainer'
-            className={`cartContainer ${isCartOpen ? 'open' : ''}`}
-            style={{ right: isCartOpen ? '0' : '-300px' }}
-          >
+          <div id='cartContainer' className={`cartContainer ${isCartOpen ? 'open' : ''}`}>
+          
             <h2 className='smallCartTitle'>Shoping cart</h2>
             {state.cartItems.length > 0 ? (
             state.cartItems.map(cartItem => (
