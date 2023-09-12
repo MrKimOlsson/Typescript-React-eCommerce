@@ -35,8 +35,8 @@
     position: absolute;
     top: 0;
     /* Add the blur effect */
-    filter: blur(2px);
     -webkit-filter: blur(2px);
+    filter: blur(2px);
 }
 
 
@@ -62,7 +62,6 @@
     line-height: 2rem;
     font-size: 1rem;
 }
-
 
 .productTitle {
     color: black;
