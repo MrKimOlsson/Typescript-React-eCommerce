@@ -61,7 +61,7 @@ const Cart = () => {
           <h3>Add some products</h3>
         )}
         <p>
-          <strong>Total price: {totalSum}</strong>
+          <strong className='totalPrice'>Total price: {totalSum}$</strong>
         </p>
         <button className='button' onClick={() => handleCheckout()}>
           {checkoutButtonText}
