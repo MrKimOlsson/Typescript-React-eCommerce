@@ -12,7 +12,7 @@ const Navbar = () => {
 
   //_____________________Cart_____________________
   // Get the cart
-  const { cart, dispatch } = useCart();
+  const { state, dispatch } = useCart();
 
   const handleQuantityChange = (productId: string, quantityChange: number) => {
     // Check if quantityChange is positive or negative
@@ -29,7 +29,7 @@ const Navbar = () => {
 
   const handleDelete = (productId: string) => {
 
-    dispatch({ type: 'REMOVE_FROM_CART', payload: productId });
+    dispatch({ type: 'REMOVE_CART_ITEM', payload: productId });
   };
 
   // For the cart checkout button.
@@ -42,7 +42,7 @@ const Navbar = () => {
   let amountList: number[] = []
   let amount: number = 0
   let totalSum: number = 0
-  cart.items.forEach(item => {
+  state.cartItems.forEach(item => {
         amount = item.quantity * item.price
         amountList.push(amount)
   });
@@ -56,8 +56,8 @@ const Navbar = () => {
 
   // Check product ammount in the cart
   let productAmount: number = 0 
-  if(cart.items){
-    productAmount = cart.items.length
+  if(state.cartItems){
+    productAmount = state.cartItems.length
   }
 
   const [isCartOpen, setCartOpen] = useState(false);
@@ -122,14 +122,11 @@ const Navbar = () => {
             <FaShoppingCart className='cartIcon' />
           </button>
 
-          <div
-            id='cartContainer'
-            className={`cartContainer ${isCartOpen ? 'open' : ''}`}
-            style={{ right: isCartOpen ? '0' : '-300px' }}
-          >
+          <div id='cartContainer' className={`cartContainer ${isCartOpen ? 'open' : ''}`}>
+          
             <h2 className='smallCartTitle'>Shoping cart</h2>
-            {cart.items.length > 0 ? (
-            cart.items.map(cartItem => (
+            {state.cartItems.length > 0 ? (
+            state.cartItems.map(cartItem => (
             <SmallCartComponent
               key={cartItem.productId}
               cartItem={cartItem}
