@@ -32,7 +32,7 @@ function SingleProductComponent() {
       dispatch({ type: 'INCREMENT_QUANTITY', payload: product.id });
     } else {
       // If the product is not in the cart, add it with a quantity of 1
-      const cartItem = { productId: product.id, quantity: 1, price: product.price, title: product.title, imageURL: product.imageURL[0], };
+      const cartItem: CartItem = { productId: product.id, quantity: 1, price: product.price, title: product.title, imageURL: product.imageURL[0], };
       dispatch({ type: 'CREATE_CART_ITEM', payload: cartItem });
     }
   };

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useCart } from '../context/CartContext';
 import CartComponent from '../components/CartComponent';
@@ -9,37 +8,29 @@ import { RootState } from '../store';
 import LatestNews from '../components/product/LatestNews';
 
 const Cart = () => {
-  // const { state, dispatch } = useCart();
   const { state, dispatch } = useCart();
   const { cartItems } = state; // Access cartItems from state
 
   const handleQuantityChange = (productId: string, quantityChange: number) => {
     if (quantityChange > 0) {
       dispatch({ type: 'INCREMENT_QUANTITY', payload: productId });
-      console.log('Quantity incremented');
     } else if (quantityChange === -1) {
       dispatch({ type: 'DECREMENT_QUANTITY', payload: productId });
-      console.log('Quantity decremented');
     }
-    // Handle potential errors or edge cases here
   };
 
   const handleDelete = (productId: string) => {
     dispatch({ type: 'REMOVE_CART_ITEM', payload: productId });
-    // Handle potential errors or edge cases here
   };
 
-    const handleCheckout = () => {
-    console.log('Add checkout functionality')
-    }
-
   let totalSum: number = 0;
-  cartItems.forEach((item) => {
+  cartItems?.forEach((item) => {
     totalSum += item.quantity * item.price;
   });
 
-  const checkoutButtonText = 'Checkout'; // Use a constant for button text
-  const moreProductsButtonText = 'More products'; // Use a constant for button text
+  // Button text
+  const checkoutButtonText = 'Checkout';
+  const moreProductsButtonText = 'More products';
 
   const products = useSelector((state: RootState) => state.products.productList);
 
@@ -63,23 +54,27 @@ const Cart = () => {
         <p>
           <strong className='totalPrice'>Total price: {totalSum}$</strong>
         </p>
-        <button className='button' onClick={() => handleCheckout()}>
-          {checkoutButtonText}
-        </button>
+        <Link to='/checkout'>
+          <button className='button'>
+            {checkoutButtonText}
+          </button>
+        </Link>
       </div>
-      <div className='dividerDiv'>
-        <h4>Latest news!</h4>
-      </div>
-      {products.length > 0 ? (
-        <LatestNews products={products} />
-      ) : (
-        <h2>No products to show</h2>
-      )}
-      <Link to='/store'>
-        <button className='button btn-moreProducts'>
-          {moreProductsButtonText}
-        </button>
-      </Link>
+
+        <div className='dividerDiv'>
+          <h4>Latest news!</h4>
+        </div>
+
+        {products.length > 0 ? (
+          <LatestNews products={products} />
+        ) : (
+          <h2>No products to show</h2>
+        )}
+        <Link to='/store'>
+          <button className='button btn-moreProducts'>
+            {moreProductsButtonText}
+          </button>
+        </Link>
     </div>
   );
 };

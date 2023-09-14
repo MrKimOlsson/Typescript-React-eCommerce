@@ -8,16 +8,18 @@ const Store = () => {
   // Access productList from the Redux state
   const productList = useSelector((state: RootState) => state.products.productList);
 
+  // Define a constant for the "No products to show" message
+  const noProductsMessage = 'No products to show';
+
   return (
     <>
       <div className='wrapper'>
         <div className='content'>
-          {/* Call the FetchProductsComponent */}
-          <FetchProductsComponent />
+           <FetchProductsComponent /> {/*Fetch the products using a type guard to ensure products match the productType and dispatch it to the productList in the redux state*/}
           {productList.length > 0 ? (
             <ProductGrid products={productList} />
           ) : (
-            <h2>No products to show</h2>
+            <h4>{noProductsMessage}</h4>
           )}
         </div>
       </div>

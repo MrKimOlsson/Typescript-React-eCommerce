@@ -1,5 +1,4 @@
 import React from 'react';
-import { CartItem } from '../utils/types/cartItem';
 import '../utils/styles/cart.css';
 
 interface CartComponentProps {

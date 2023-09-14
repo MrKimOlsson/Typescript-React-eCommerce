@@ -1,4 +1,4 @@
-export interface ProductType {
+interface ProductType {
     category:         string,
     imageURL:         string[],
     price:            number,
@@ -9,15 +9,18 @@ export interface ProductType {
   }
   
   // Define the type for the Redux state
-  export interface RootState {
+  interface RootState {
     productList: ProductType[];
   }
 
-  export interface Footwear extends ProductType {
+  interface Footwear extends ProductType {
+    shoesize: string,
+  }
+
+  interface Hoodie extends ProductType {
     size: string,
   }
 
-  export interface Footwear extends ProductType {
-    size: string,
-  }
+
+
 

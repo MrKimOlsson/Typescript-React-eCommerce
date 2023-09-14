@@ -1,6 +1,5 @@
 import React from 'react';
 import ProductComponent from './ProductComponent'; // Make sure the import path is correct
-import { ProductType } from '../../utils/types/product'; // Adjust the import path
 import '../../utils/styles/product.css'
 
 interface ProductGridProps {
