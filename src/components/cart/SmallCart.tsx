@@ -38,7 +38,7 @@ const SmallCart = () => {
   let amountList: number[] = []
   let amount: number = 0
   let totalSum: number = 0
-  state.cartItems.forEach(item => {
+  state.cartItems?.forEach(item => {
         amount = item.quantity * item.price
         amountList.push(amount)
   });

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import Logo from '../assets/logo.png'
 import '../utils/styles/navbar.css'
 import '../utils/styles/cart.css'
 import SmallCart from './cart/SmallCart';
-
 
 const Navbar = () => {
  
@@ -34,7 +33,6 @@ const Navbar = () => {
       hamburger?.removeEventListener("click", toggleMenu);
     };
   }, []);
-
 
   return (
     <>
