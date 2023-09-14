@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useCart } from '../../context/CartContext';
-import { ProductType } from '../../utils/types/product';
 import { saveCartToLocalStorage } from '../../utils/helpers/localStorage'; // Used to save the cart to local storage
 
 interface ProductProps {

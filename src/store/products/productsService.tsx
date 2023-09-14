@@ -1,15 +1,5 @@
 import { db } from "../../firebase/config"
-import { collection, getDocs, doc, setDoc, DocumentData } from 'firebase/firestore'
-
-export interface ProductType {
-  category: string;
-  imageURL: string[];
-  price: number;
-  shortDescription: string;
-  description: string;
-  title: string;
-  id: string;
-}
+import { collection, getDocs, doc, setDoc } from 'firebase/firestore'
 
 // Function to fetch products from Firestore
 async function fetchProducts(): Promise<ProductType[]> {

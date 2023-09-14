@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import SmallCartComponent from '../SmallCartComponent'
 import { FaShoppingCart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -28,12 +28,6 @@ const SmallCart = () => {
     dispatch({ type: 'REMOVE_CART_ITEM', payload: productId });
   };
 
-  // For the cart checkout button.
-  // Not working yet. Needs checkout functionality
-  const handleCheckout = () => {
-    console.log('Add checkout functionality')
-  };
-
   // Calculate total sum
   let amountList: number[] = []
   let amount: number = 0
@@ -50,32 +44,33 @@ const SmallCart = () => {
     });
   }
 
-  // Check product ammount in the cart
-  let productAmount: number = 0 
-  if(state.cartItems){
-    productAmount = state.cartItems.length
+  // Calculate total quantity
+  let quantityList: number[] = []
+  let itemsQuantity: number = 0
+  let totalQuantity: number = 0
+  state.cartItems?.forEach(item => {
+       itemsQuantity = item.quantity
+        quantityList.push(itemsQuantity)
+  });
+
+  if(quantityList.length > 0){
+
+    quantityList.forEach(item => {
+      totalQuantity += item
+    });
   }
-
+  
   const [isCartOpen, setCartOpen] = useState(false);
-  const [cartAmount, setCartAmount] = useState(0);
-
-  useEffect(() => {
-  })
   
   const openCart = () => {
-    console.log('Button clicked');
-    console.log('isCartOpen:', isCartOpen);
-    setCartAmount(productAmount);
     setCartOpen(!isCartOpen);
-    console.log('isCartOpen after click:', isCartOpen);
   };
   return (
     <div>
          {/* Cart */}
-
          <button className='cartButton' onClick={openCart}>
-            <span id='productAmount' className={productAmount === 0 ? 'hide-amount' : ''}>
-              {productAmount}
+            <span id='productAmount' className={totalQuantity === 0 ? 'hide-amount' : ''}>
+              {totalQuantity}
             </span>
             <span className='cartIcon'></span>
             <FaShoppingCart className='cartIcon' />

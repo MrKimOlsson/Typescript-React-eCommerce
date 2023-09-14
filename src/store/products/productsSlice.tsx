@@ -1,5 +1,4 @@
 import productsService from "../products/productsService";
-import { ProductType } from '../../utils/types/product';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Error {
@@ -25,6 +24,7 @@ export const getProducts = createAsyncThunk(
     try {
       return await productsService.fetchProducts();
     } catch (err) {
+      // TypeAssertions to ensure the type of the error message
       return thunkAPI.rejectWithValue((err as Error).message);
     }
   }
@@ -50,6 +50,7 @@ const productsSlice = createSlice({
       })
       .addCase(getProducts.rejected, (state, action) => {
         state.loading = false;
+        // TypeAssertions to ensure the type of the state error message
         state.error = (action.payload as Error).message;
       });
   },

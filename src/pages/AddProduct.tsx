@@ -6,7 +6,6 @@ const AddProducts = () => {
     <div className='wrapper'>
         <h3>Add product</h3>
         <AddProductForm />
-
     </div>
   )
 }

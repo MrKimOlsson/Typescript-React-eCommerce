@@ -1,5 +1,3 @@
-import { CartItem } from "../types/cartItem";
-
 const CART_STORAGE_KEY = '@LS_CART';
 
 type StorageKey = typeof CART_STORAGE_KEY;
@@ -38,38 +36,3 @@ export const removeFromLocalStorage = (key: StorageKey) => {
 export const clearLocalStorage = () => {
   localStorage.clear();
 };
-
-
-
-
-
-
-// const PRODUCTS_STORAGE_KEY = '@LS_PRODUCTS';
-// const USER_STORAGE_KEY = '@LS_USER';
-// const CART_STORAGE_KEY = '@LS_CART';
-
-
-// //_________________________PRODUCTS_________________________
-
-// // export const getProductsFromLocalStorage = (): ProductType[] => {
-// //     return getFromLocalStorage(PRODUCTS_STORAGE_KEY) || [];
-// // }
-
-// // export const saveProductToLocalStorage = (threads: ProductType[]) => {
-// //     saveToLocalStorage(PRODUCTS_STORAGE_KEY, threads);
-// // }
-
-// //_________________________USER_________________________
-
-// // export const getUserFromLocalStorage = (): User => {
-// //     return getFromLocalStorage(USER_STORAGE_KEY) || {
-// //         id: -1,
-// // 	    name: "John Doe",
-// // 	    userName: "anonymous"
-// //     }
-// // }
-
-// // export const saveUserToLocalStorage = (user: User) => {
-// //     saveToLocalStorage(USER_STORAGE_KEY, user);
-// // }
-

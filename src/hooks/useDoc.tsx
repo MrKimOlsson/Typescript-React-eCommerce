@@ -1,20 +1,15 @@
-import { doc, getDoc, DocumentSnapshot } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from '../firebase/config';
 
-interface DocData {
-  id: string;
-  [key: string]: any;
-}
-
 interface UseDocResult {
-  data: DocData | null;
+  data: ProductType | null;
   error: string | null;
   loading: boolean;
 }
 
 const useDoc = (collection: string, id: string): UseDocResult => {
-  const [data, setData] = useState<DocData | null>(null);
+  const [data, setData] = useState<ProductType | null>(null);
   const [loading, setLoading] = useState<boolean>(true); // Start loading initially
   const [error, setError] = useState<string | null>(null);
 
@@ -28,7 +23,8 @@ const useDoc = (collection: string, id: string): UseDocResult => {
           setLoading(false);
           setError('Could not find that document');
         } else {
-          setData({ id: docSnapshot.id, ...docSnapshot.data() } as DocData);
+          // TypeAssertion to tell the TypeScript compiler that the resulting object should be treated as an instance of the ProductType type. 
+          setData({ id: docSnapshot.id, ...docSnapshot.data() } as ProductType);
           setLoading(false);
         }
       } catch (err) {

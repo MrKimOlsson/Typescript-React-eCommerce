@@ -15,11 +15,11 @@ const Home = () => {
     <>
       <div className='wrapper'>
         <div className='content'>
-          <FetchProductsComponent /> {/* Call the FetchProductsComponent */}
+          <FetchProductsComponent /> {/*Fetch the products using a type guard to ensure products match the productType and dispatch it to the productList in the redux state*/}
           {productList.length > 0 ? (
             <HomeProducts products={productList} />
           ) : (
-            <h2>{noProductsMessage}</h2>
+            <h4>{noProductsMessage}</h4>
           )}
         </div>
       </div>

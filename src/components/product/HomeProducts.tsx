@@ -1,5 +1,4 @@
 import React from 'react';
-import { ProductType } from '../../utils/types/product';
 import '../../utils/styles/product.css';
 import { Link } from 'react-router-dom';
 import LatestNews from './LatestNews';
@@ -14,7 +13,7 @@ const HomeProducts: React.FC<ProductGridProps> = ({ products }: ProductGridProps
   const hasImageURLs = hasProducts && products[0].imageURL && products[0].imageURL.length > 0;
 
   // Use optional chaining to safely access imageURLs
-  const imageURL = hasImageURLs ? products[16]?.imageURL?.[3] : undefined; // Change null to undefined
+  const imageURL = hasImageURLs ? products[10]?.imageURL?.[2] : undefined; // Change null to undefined
 
   return (
     <>

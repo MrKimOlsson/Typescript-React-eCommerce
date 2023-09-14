@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Removed unused Navigate import
-import { ProductType } from '../../utils/types/product';
 import AddToCartFunctions from './AddToCartFunction';
 
 interface ProductListProps {
